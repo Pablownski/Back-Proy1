@@ -23,6 +23,7 @@ def get_ranking(db: Session) -> list[dict]:
     for ranking, player, avg_rating in rows:
         tiers.setdefault(ranking.tier, []).append(
             {
+                "ranking_id": ranking.id,
                 "id": player.id,
                 "name": player.name,
                 "image_url": player.image_url,
@@ -67,6 +68,12 @@ def delete_ranking(db: Session, ranking_id: int) -> bool:
     db.delete(ranking)
     db.commit()
     return True
+
+
+def delete_all_ranking(db: Session) -> int:
+    deleted = db.query(Ranking).delete()
+    db.commit()
+    return deleted
 
 
 def player_exists(db: Session, player_id: int) -> bool:

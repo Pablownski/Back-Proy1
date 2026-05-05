@@ -34,6 +34,12 @@ def update_ranking(ranking_id: int, data: RankingUpdate, db: Session = Depends(g
     return result
 
 
+@router.delete("", status_code=200, summary="Remove all players from the ranking")
+def delete_all_ranking(db: Session = Depends(get_db)):
+    count = ranking_service.delete_all_ranking(db)
+    return {"deleted": count}
+
+
 @router.delete("/{ranking_id}", status_code=204, summary="Remove a player from the ranking")
 def delete_ranking(ranking_id: int, db: Session = Depends(get_db)):
     deleted = ranking_service.delete_ranking(db, ranking_id)

@@ -70,6 +70,7 @@ class RankingResponse(BaseModel):
 
 
 class TierPlayerResponse(BaseModel):
+    ranking_id: int
     id: int
     name: str
     image_url: Optional[str] = None
